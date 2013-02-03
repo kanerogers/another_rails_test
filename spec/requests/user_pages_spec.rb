@@ -41,6 +41,21 @@ describe "User pages" do
       it "should create a user" do
         expect { click_button submit }.to change(User, :count).by(1)
       end
+
+      it "should show me the flash" do
+        click_button submit
+
+        page { should have_selector('.alert-success',   text: "Welcome to the Sample App!") }
+      end
+
+      it "shouldn't show me the flash a second time" do
+        click_button submit
+
+        # Relaod the page
+        visit(current_path)
+
+        page { should_not have_selector('.alert-success',   text: "Welcome to the Sample App!") }
+      end
     end
    
   end
